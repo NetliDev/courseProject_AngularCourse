@@ -17,12 +17,10 @@ export class RecipeListComponent implements OnInit {
      'https://www.inspiredtaste.net/wp-content/uploads/2019/07/Crispy-Falafel-Recipe-1200.jpg')
 
   ];
-
   constructor() { }
 
   ngOnInit() {
   }
-
 
   onRecipeSelected(recipe :Recipe){
     this.recipeWasSelected.emit(recipe);
