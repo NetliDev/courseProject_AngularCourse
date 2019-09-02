@@ -16,4 +16,15 @@ export class ShoppingListServices {
         this.ingredients.push(ingredient);
         this.ingredientsChanged.emit(this.ingredients.slice());//para informar que la lista cambio 
     }
+
+    //metodo para el recipe.service:
+    addIngredients(ingredients: Ingredient[]) {
+        // for (let ingredient of ingredients) {
+        //     this.addIngredient(ingredient);
+        // }
+        //nustro array de ingredients lo va a convertir en una lista para hacerles push
+        this.ingredients.push(...ingredients);
+        this.ingredientsChanged.emit(this.ingredients.slice());
+
+    }
 }
