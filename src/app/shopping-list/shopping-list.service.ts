@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 
 export class ShoppingListServices {
     ingredientsChanged = new Subject<Ingredient[]>();
+    startedEditing = new Subject<number>(); // para el boton editar
 
     private ingredients: Ingredient[] = [
         new Ingredient('Apples', 5),
@@ -13,6 +14,10 @@ export class ShoppingListServices {
     getIngredients() {
         return this.ingredients.slice();
     }
+    getIngredient(index: number) {
+        return this.ingredients[index];
+    }
+
     addIngredient(ingredient: Ingredient) {
         this.ingredients.push(ingredient);
         this.ingredientsChanged.next(this.ingredients.slice());//para informar que la lista cambio 
@@ -27,5 +32,16 @@ export class ShoppingListServices {
         this.ingredients.push(...ingredients);
         this.ingredientsChanged.next(this.ingredients.slice());
 
+    }
+
+    //se usa en shopping list edit
+    updateIngredient(index: number, newIngredient: Ingredient) {
+        this.ingredients[index] = newIngredient;
+        this.ingredientsChanged.next(this.ingredients.slice());//para informar que la lista cambio 
+    }
+
+    deleteIngredient(index: number) {
+        this.ingredients.splice(index, 1); //borra 1 elemento desde la posicion index
+        this.ingredientsChanged.next(this.ingredients.slice());
     }
 }

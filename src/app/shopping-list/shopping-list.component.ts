@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.css']
 })
-export class ShoppingListComponent implements OnInit , OnDestroy{
+export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[];
   private subscription: Subscription;
 
@@ -23,7 +23,11 @@ export class ShoppingListComponent implements OnInit , OnDestroy{
       }
     );
   }
-  ngOnDestroy(){
+
+  onEditItem(index: number) {
+    this.slService.startedEditing.next(index); // envia el index para que pueda ser escuchado desde otro componente
+  }
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
