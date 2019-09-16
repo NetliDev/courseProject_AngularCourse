@@ -16,7 +16,7 @@ export class SignupComponent implements OnInit {
 
   onSignup(form: NgForm) {
     const email = form.value.email;
-    const password = form.value.password;
+    const password = form.value.password; // password en firebase tiene que ser mayor de 6 caracteres
     this.authService.signupUser(email,password);
   }
 
