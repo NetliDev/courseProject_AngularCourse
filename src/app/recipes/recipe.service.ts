@@ -10,9 +10,8 @@ export class RecipeService {
     //porque no se actualiza los arrays se usa el subject, hay otro ejemplo en shopping list service
     recipesChanged = new Subject<Recipe[]>();
 
-    constructor(private slService: ShoppingListServices) {
 
-    }
+
     private recipes: Recipe[] = [
         new Recipe('tasty Burger',
             'This is simply Burger',
@@ -25,6 +24,12 @@ export class RecipeService {
             [new Ingredient('Meat', 1),
             new Ingredient('bunt', 2)])
     ];
+
+    constructor(private slService: ShoppingListServices) { }
+    setRecipes(recipe: Recipe[]) {
+        this.recipes = recipe;
+        this.recipesChanged.next(this.recipes.slice());
+    }
 
     getRecipes() {
         return this.recipes.slice();
