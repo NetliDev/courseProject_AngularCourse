@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
 import { map } from 'rxjs/operators'
@@ -11,12 +11,24 @@ export class DataStorageService {
 
   constructor(private http: HttpClient,
     private recipeService: RecipeService,
-    private authService:AuthService) { }
+    private authService: AuthService) { }
 
   storeRecipes() {
     const token = this.authService.getToken();
-    return this.http.put('https://ng-recipe-book-9e6ef.firebaseio.com/recipes.json?auth=' + token,
-      this.recipeService.getRecipes()); //tambien se puede suscribir, como la seccion 18
+    // const headers = new HttpHeaders().set('Authotization','Bearer afowekpfoekrfpker');  
+    // return this.http.put('https://ng-recipe-book-9e6ef.firebaseio.com/recipes.json',
+    //   this.recipeService.getRecipes(), {
+    //     params: new HttpParams().set('auth',token)
+    //     // headers:headers
+    //   }); //tambien se puede suscribir, como la seccion 18
+
+    // otra foram de hacerlo mas avanzado, obtenindo el rogreso de carga
+    const req = new HttpRequest('PUT', 'https://ng-recipe-book-9e6ef.firebaseio.com/recipes.json',
+      this.recipeService.getRecipes(), {
+      reportProgress: true,
+      params: new HttpParams().set('auth', token)
+    });
+    return this.http.request(req);
   }
 
   getRecipes() {
